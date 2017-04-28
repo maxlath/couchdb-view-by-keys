@@ -18,6 +18,7 @@
   "author": "maxlath",
   "license": "MIT",
   "dependencies": {
-    "blue-cot": "^3.4.2"
+    "blue-cot": "^3.4.2",
+    "commander": "^2.9.0"
   }
 }

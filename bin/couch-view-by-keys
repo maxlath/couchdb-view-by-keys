@@ -1,5 +1,13 @@
 #!/usr/bin/env node
-var [ url, ...keys ] = process.argv.slice(2)
+const program = require('commander')
+
+program
+.option('-d, --debug', 'Debug')
+.parse(process.argv)
+
+const { debug } = program
+
+var [ url, ...keys ] = program.args
 
 const viewUrlPattern = /(https?):\/\/([^@]+)@(\w+):(\d+)\/([\w-_]+)\/_design\/([\w-_]+)\/_view\/([\w-_]+)/
 
@@ -7,7 +15,7 @@ const viewUrlPattern = /(https?):\/\/([^@]+)@(\w+):(\d+)\/([\w-_]+)\/_design\/([
 const [ match, protocol, auth, hostname, port, dbName, designDocName, viewName ] = url.match(viewUrlPattern)
 const ssl = protocol === 'https'
 
-const config = { hostname, port, ssl, auth }
+const config = { hostname, port, ssl, auth, debug }
 const db = require('blue-cot')(config)(dbName, designDocName)
 
 keys = keys.map(JSON.parse.bind(JSON))
