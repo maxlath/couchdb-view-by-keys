@@ -1,0 +1,23 @@
+{
+  "name": "couch-view-keys",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "bin": {
+    "couch-view-by-keys": "./bin/couch-view-by-keys"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "CouchDB",
+    "CLI",
+    "view",
+    "keys"
+  ],
+  "author": "maxlath",
+  "license": "MIT",
+  "dependencies": {
+    "blue-cot": "^3.4.2"
+  }
+}

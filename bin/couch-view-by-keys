@@ -1,0 +1,18 @@
+#!/usr/bin/env node
+var [ url, ...keys ] = process.argv.slice(2)
+
+const viewUrlPattern = /(https?):\/\/([^@]+)@(\w+):(\d+)\/([\w-_]+)\/_design\/([\w-_]+)\/_view\/([\w-_]+)/
+
+// port, hostname, user, pass, auth, ssl, debug
+const [ match, protocol, auth, hostname, port, dbName, designDocName, viewName ] = url.match(viewUrlPattern)
+const ssl = protocol === 'https'
+
+const config = { hostname, port, ssl, auth }
+const db = require('blue-cot')(config)(dbName, designDocName)
+
+keys = keys.map(JSON.parse.bind(JSON))
+
+db.viewByKeys(viewName, keys)
+.then(JSON.stringify.bind(JSON))
+.then(console.log)
+.catch(console.error)
