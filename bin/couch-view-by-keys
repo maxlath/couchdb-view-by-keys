@@ -5,9 +5,10 @@ program
 .option('-d, --debug', 'Debug')
 .option('-n, --ndjson', 'Log as NDJSON')
 .option('-j, --json <indentation>', 'JSON indentation')
+.option('-k, --keep <attributes>', 'Pick attributes to keep')
 .parse(process.argv)
 
-const { debug, ndjson, json } = program
+const { debug, ndjson, json, keep } = program
 const indentation = /^\d+$/.test(json) ? parseInt(json) : 0
 
 var [ url, ...keys ] = program.args
@@ -26,6 +27,9 @@ keys = keys.map(JSON.parse.bind(JSON))
 // Default to ndjson
 const logger = json ? require('../lib/json')(indentation) : require('../lib/ndjson')
 
+const keeper = require('../lib/keep')(keep)
+
 db.viewByKeys(viewName, keys)
+.then(keeper)
 .then(logger)
 .catch(console.error)
