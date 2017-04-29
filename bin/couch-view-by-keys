@@ -3,9 +3,12 @@ const program = require('commander')
 
 program
 .option('-d, --debug', 'Debug')
+.option('-n, --ndjson', 'Log as NDJSON')
+.option('-j, --json <indentation>', 'JSON indentation')
 .parse(process.argv)
 
-const { debug } = program
+const { debug, ndjson, json } = program
+const indentation = /^\d+$/.test(json) ? parseInt(json) : 0
 
 var [ url, ...keys ] = program.args
 
@@ -20,7 +23,9 @@ const db = require('blue-cot')(config)(dbName, designDocName)
 
 keys = keys.map(JSON.parse.bind(JSON))
 
+// Default to ndjson
+const logger = json ? require('../lib/json')(indentation) : require('../lib/ndjson')
+
 db.viewByKeys(viewName, keys)
-.then(JSON.stringify.bind(JSON))
-.then(console.log)
+.then(logger)
 .catch(console.error)
