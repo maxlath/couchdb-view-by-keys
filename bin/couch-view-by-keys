@@ -22,7 +22,7 @@ const ssl = protocol === 'https'
 const config = { hostname, port, ssl, auth, debug }
 const db = require('blue-cot')(config)(dbName, designDocName)
 
-keys = keys.map(JSON.parse.bind(JSON))
+keys = keys.map(require('../lib/parse_key'))
 
 // Default to ndjson
 const logger = json ? require('../lib/json')(indentation) : require('../lib/ndjson')
