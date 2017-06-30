@@ -1,4 +1,4 @@
-# couch-view-keys
+# couch-view-by-keys
 
 ## Examples
 
