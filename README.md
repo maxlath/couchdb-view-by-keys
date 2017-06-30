@@ -51,7 +51,7 @@ couch-view-by-keys "$url" keyA keyB keyC --json 4
 
 ## Tips
 ### use single quotes in JSON keys
-Some times you might need to use variable interpolation, which requires to use double quotes around your values containing the variables. Unfortunately, JSON keys expect valid JSON, which requires doubles quotes too. You would thus normally endup with some horrible escaping of the kind:
+Some times you might need to use variable interpolation, which, in bash, requires to use double quotes. Unfortunately, JSON keys being expected to be valid JSON, they also require doubles quotes. You would thus normally endup with some horrible escaping of the kind:
 ```sh
 couch-view-by-keys "$url" "[\"$1\",\"a\"]" "[\"$2\",\"b\"]" "[\"$3\",\"c\"]"
 ```
