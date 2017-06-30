@@ -59,9 +59,9 @@ couch-view-by-keys "$url" "[\"$1\",\"a\"]" "[\"$2\",\"b\"]" "[\"$3\",\"c\"]"
 ```
 Horrified by so much anticipated pain, you might just stop there, give up on computing and start drinking. But fear no more! You can just use single quotes instead:
 ```sh
-// works with simple arrays
+# works with simple arrays
 couch-view-by-keys "$url" "['$1','a']" "['$2','b']" "['$3','c']"
-// and simple objects
+# and simple objects
 couch-view-by-keys "$url" "{ 'a': '$1'}"
-// TODO: make it work for nested objects/arrays if you have the need
+# TODO: make it work for nested objects/arrays if you have the need
 ```
