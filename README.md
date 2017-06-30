@@ -2,28 +2,60 @@
 
 A command line tool to query [CouchDB](http://couchdb.apache.org/) [views](https://wiki.apache.org/couchdb/Introduction_to_CouchDB_views), focused on easing queries with [complex JSON keys](https://wiki.apache.org/couchdb/Introduction_to_CouchDB_views#Complex_Keys) (which are a pain to do with `curl`)
 
+## Summary
+
+<!-- START doctoc generated TOC please keep comment here to allow auto update -->
+<!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
+
+
+- [Install](#install)
+- [How-To](#how-to)
+  - [Basic use](#basic-use)
+  - [Output format](#output-format)
+    - [one row per line](#one-row-per-line)
+    - [indented JSON](#indented-json)
+
+<!-- END doctoc generated TOC please keep comment here to allow auto update -->
+
 ## Install
 
 ```sh
 npm install -g couch-view-by-keys
 ```
 
-## Examples
+## How-To
 
+### Basic use
 ```sh
 url="http://user:pass@localhost:5984/db-name/_design/design-doc-name/_view/view-name"
 couch-view-by-keys "$url" keyA keyB keyC
 couch-view-by-keys "$url" '["a", "complex", "key"]' '["another", "complex", "key"]'
+```
 
+### Output format
+#### one row per line
+That's the default output format
+```sh
 couch-view-by-keys "$url" keyA keyB keyC
-// => outputs one row per line by default
-
+```
+set the indentation to 0 to drop newlines
+```sh
 couch-view-by-keys "$url" keyA keyB keyC --json 0
-// => outputs rows as JSON without indentation
+```
 
+#### indented JSON
+```sh
 couch-view-by-keys "$url" keyA keyB keyC --json 2
-// => outputs rows as JSON with indentation = 2
-
 couch-view-by-keys "$url" keyA keyB keyC --json 4
-// => outputs rows as JSON with indentation = 4
+```
+
+## Tips
+### use single quotes in JSON keys
+Some times you might need to use variable interpolation, which requires to use double quotes around your values containing the variables. Unfortunately, JSON keys expect valid JSON, which requires doubles quotes too. You would thus normally endup with some horrible escaping of the kind:
+```sh
+couch-view-by-keys "$url" "[\"$1\",\"a\"]" "[\"$2\",\"b\"]" "[\"$3\",\"c\"]"
+```
+Horrified by so much anticipated pain, you might just stop there, give up on computing and start drinking. But fear no more! You can just use single quotes instead:
+```sh
+couch-view-by-keys "$url" "['$1','a']" "['$2','b']" "['$3','c']"
 ```
