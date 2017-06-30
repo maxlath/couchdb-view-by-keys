@@ -14,6 +14,8 @@ A command line tool to query [CouchDB](http://couchdb.apache.org/) [views](https
   - [Output format](#output-format)
     - [one row per line](#one-row-per-line)
     - [indented JSON](#indented-json)
+- [Tips](#tips)
+  - [use single quotes in JSON keys](#use-single-quotes-in-json-keys)
 
 <!-- END doctoc generated TOC please keep comment here to allow auto update -->
 
