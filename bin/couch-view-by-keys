@@ -33,3 +33,9 @@ db.viewByKeys(viewName, keys)
 .then(keeper)
 .then(logger)
 .catch(console.error)
+
+// Prevent logging an EPIPE error when piping the output
+// cf https://github.com/maxlath/wikidata-cli/issues/7
+process.stdout.on('error', function (err) {
+  if (err.code !== 'EPIPE') throw err
+})
