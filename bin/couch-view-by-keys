@@ -15,6 +15,14 @@ var [ url, ...keys ] = program.args
 
 const viewUrlPattern = /(https?):\/\/([^@]+)@(\w+):(\d+)\/([\w-_]+)\/_design\/([\w-_]+)\/_view\/([\w-_]+)/
 
+const urlData = url.match(viewUrlPattern)
+
+if (!urlData) {
+  // Known case where this is a false negative: when no port is required
+  console.error("the provided URL didn't match the CouchDB view URL pattern")
+  process.exit(1)
+}
+
 // port, hostname, user, pass, auth, ssl, debug
 const [ match, protocol, auth, hostname, port, dbName, designDocName, viewName ] = url.match(viewUrlPattern)
 const ssl = protocol === 'https'
