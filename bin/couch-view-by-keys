@@ -37,7 +37,9 @@ const logger = json ? require('../lib/json')(indentation) : require('../lib/ndjs
 
 const keeper = require('../lib/keep')(keep)
 
-db.viewByKeys(viewName, keys)
+const query = require('../lib/parse_querystring')(url)
+
+db.viewByKeysCustom(viewName, keys, query)
 .then(keeper)
 .then(logger)
 .catch(console.error)
