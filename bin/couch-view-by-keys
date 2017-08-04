@@ -1,5 +1,6 @@
 #!/usr/bin/env node
 const program = require('commander')
+const URL = require('url')
 
 program
 .option('-d, --debug', 'Debug')
@@ -13,21 +14,21 @@ const indentation = /^\d+$/.test(json) ? parseInt(json) : 0
 
 var [ url, ...keys ] = program.args
 
-const viewUrlPattern = /(https?):\/\/([^@]+)@(\w+):(\d+)\/([\w-_]+)\/_design\/([\w-_]+)\/_view\/([\w-_]+)/
+var { protocol, auth, hostname, port, query, pathname } = URL.parse(url, true)
+const ssl = protocol === 'https:'
 
-const urlData = url.match(viewUrlPattern)
+const viewPathnamePattern = /\/([\w-_]+)\/_design\/([\w-_]+)\/_view\/([\w-_]+)/
+const pathnameData = url.match(viewPathnamePattern)
 
-if (!urlData) {
-  // Known case where this is a false negative: when no port is required
+if (!pathnameData) {
   console.error("the provided URL didn't match the CouchDB view URL pattern")
   process.exit(1)
 }
 
-// port, hostname, user, pass, auth, ssl, debug
-const [ match, protocol, auth, hostname, port, dbName, designDocName, viewName ] = url.match(viewUrlPattern)
-const ssl = protocol === 'https'
+const [ match, dbName, designDocName, viewName ] = pathnameData
 
 const config = { hostname, port, ssl, auth, debug }
+
 const db = require('blue-cot')(config)(dbName, designDocName)
 
 keys = keys.map(require('../lib/parse_key'))
@@ -37,7 +38,7 @@ const logger = json ? require('../lib/json')(indentation) : require('../lib/ndjs
 
 const keeper = require('../lib/keep')(keep)
 
-const query = require('../lib/parse_querystring')(url)
+query = require('../lib/parse_query_and_apply_defaults')(query)
 
 db.viewByKeysCustom(viewName, keys, query)
 .then(keeper)
