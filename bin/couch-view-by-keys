@@ -9,6 +9,8 @@ program
 .option('-k, --keep <attributes>', 'Pick attributes to keep')
 .parse(process.argv)
 
+if (program.args.length === 0) return program.help()
+
 const { debug, ndjson, json, keep } = program
 const indentation = /^\d+$/.test(json) ? parseInt(json) : 0
 
