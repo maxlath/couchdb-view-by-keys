@@ -17,7 +17,13 @@ const indentation = /^\d+$/.test(json) ? parseInt(json) : 0
 var [ url, ...keys ] = program.args
 
 var { protocol, auth, hostname, port, query, pathname } = URL.parse(url, true)
-const ssl = protocol === 'https:'
+protocol = protocol.replace(':', '')
+
+var username, password
+if (auth) {
+  var [ username, ...password ] = auth.split(':')
+  password = password.join(':')
+}
 
 const viewPathnamePattern = /\/([\w-_]+)\/_design\/([\w-_]+)\/_view\/([\w-_]+)/
 const pathnameData = url.match(viewPathnamePattern)
@@ -29,7 +35,7 @@ if (!pathnameData) {
 
 const [ match, dbName, designDocName, viewName ] = pathnameData
 
-const config = { hostname, port, ssl, auth, debug }
+const config = { protocol, hostname, port, username, password, debug }
 
 const db = require('blue-cot')(config)(dbName, designDocName)
 
@@ -44,7 +50,7 @@ query = require('../lib/parse_query_and_apply_defaults')(query)
 
 var reqPromise
 if (keys.length === 0) {
-  reqPromise = db.view(designDocName, viewName, query).get('rows')
+  reqPromise = db.view(designDocName, viewName, query).then(({ rows }) => rows)
 } else {
   reqPromise = db.viewByKeysCustom(viewName, keys, query)
 }
