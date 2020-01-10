@@ -42,7 +42,14 @@ const keeper = require('../lib/keep')(keep)
 
 query = require('../lib/parse_query_and_apply_defaults')(query)
 
-db.viewByKeysCustom(viewName, keys, query)
+var reqPromise
+if (keys.length === 0) {
+  reqPromise = db.view(designDocName, viewName, query).get('rows')
+} else {
+  reqPromise = db.viewByKeysCustom(viewName, keys, query)
+}
+
+reqPromise
 .then(keeper)
 .then(logger)
 .catch(console.error)
