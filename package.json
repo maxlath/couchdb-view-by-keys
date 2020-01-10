@@ -19,7 +19,7 @@
   "author": "maxlath",
   "license": "MIT",
   "dependencies": {
-    "blue-cot": "^4.0.2",
+    "blue-cot": "^4.0.3",
     "commander": "^2.9.0",
     "lodash.get": "^4.4.2",
     "lodash.set": "^4.3.2"
