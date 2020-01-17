@@ -5,7 +5,7 @@ const URL = require('url')
 program
 .option('-d, --debug', 'Debug')
 .option('-n, --ndjson', 'Log as NDJSON')
-.option('-j, --json <indentation>', 'JSON indentation')
+.option('-j, --json [indentation]', 'JSON indentation')
 .option('-k, --keep <attributes>', 'Pick attributes to keep')
 .parse(process.argv)
 
