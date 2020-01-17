@@ -29,9 +29,18 @@ npm install -g couch-view-by-keys
 
 ### Basic use
 ```sh
-url="http://user:pass@localhost:5984/db-name/_design/design-doc-name/_view/view-name"
+url="http://username:password@localhost:5984/db-name/_design/design-doc-name/_view/view-name"
 couch-view-by-keys "$url" keyA keyB keyC
 couch-view-by-keys "$url" '["a", "complex", "key"]' '["another", "complex", "key"]'
+# Or from a file with one key per line
+cat keys | xargs couch-view-by-keys "$url"
+```
+Or to fetch many documents
+```sh
+url="http://username:password@localhost:5984/_all_docs"
+couch-view-by-keys "$url" docIdA docIdB docIdC
+# Or from a file with one doc id per line
+cat ids | xargs couch-view-by-keys "$url"
 ```
 
 ### Output format

@@ -26,14 +26,22 @@ if (auth) {
 }
 
 const viewPathnamePattern = /\/([\w-_]+)\/_design\/([\w-_]+)\/_view\/([\w-_]+)/
-const pathnameData = url.match(viewPathnamePattern)
+const allDocsPathnamePattern = /\/([\w-_]+)\/(_all_docs)/
+const pathnameData = url.match(viewPathnamePattern) || url.match(allDocsPathnamePattern)
 
 if (!pathnameData) {
   console.error("the provided URL didn't match the CouchDB view URL pattern")
   process.exit(1)
 }
 
-const [ match, dbName, designDocName, viewName ] = pathnameData
+let [ match, dbName, designDocName, viewName ] = pathnameData
+
+let allDocsMode = false
+if (designDocName === '_all_docs') {
+  designDocName = null
+  viewName = null
+  allDocsMode = true
+}
 
 const config = { protocol, hostname, port, username, password, debug }
 
@@ -48,14 +56,9 @@ const keeper = require('../lib/keep')(keep)
 
 query = require('../lib/parse_query_and_apply_defaults')(query)
 
-var reqPromise
-if (keys.length === 0) {
-  reqPromise = db.view(designDocName, viewName, query).then(({ rows }) => rows)
-} else {
-  reqPromise = db.viewByKeysCustom(viewName, keys, query)
-}
+const getRows = require('../lib/get_rows')
 
-reqPromise
+getRows({ db, designDocName, viewName, query, allDocsMode, keys })
 .then(keeper)
 .then(logger)
 .catch(console.error)
