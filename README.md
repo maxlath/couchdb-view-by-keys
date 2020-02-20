@@ -74,3 +74,17 @@ couch-view-by-keys "$url" "['$1','a']" "['$2','b']" "['$3','c']"
 couch-view-by-keys "$url" "{ 'a': '$1'}"
 # TODO: make it work for nested objects/arrays if you have the need
 ```
+
+### Get only docs
+By default, view rows are returned, that is, and object looking like `{ id, key, value, doc }`. This can easily be parsed with [jq](https://stedolan.github.io/jq/manual/) to keep only the docs:
+```sh
+couch-view-by-keys $url | jq '.doc' -c
+```
+
+Notice the `-c` option (short for `--compact-output`) to keep the output in a NDJSON format.
+
+### Get only view rows id and key
+By default, view rows are returned with their document, but this can be disabled by setting `include_docs=false`
+```sh
+couch-view-by-keys "${url}?include_docs=false"
+```
