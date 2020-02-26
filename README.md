@@ -88,3 +88,5 @@ By default, view rows are returned with their document, but this can be disabled
 ```sh
 couch-view-by-keys "${url}?include_docs=false"
 ```
+
+NB: `reduce=false` is also set by default as `reduce=true` is incompatible with `include_docs=true`
