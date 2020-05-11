@@ -18,7 +18,10 @@
     "CouchDB",
     "CLI",
     "view",
-    "keys"
+    "keys",
+    "docs",
+    "ndjson",
+    "json"
   ],
   "author": "maxlath",
   "license": "MIT",
