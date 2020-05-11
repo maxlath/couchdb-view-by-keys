@@ -2,6 +2,10 @@
 
 A command line tool to query [CouchDB](http://couchdb.apache.org/) [views](https://wiki.apache.org/couchdb/Introduction_to_CouchDB_views), focused on easing queries with [complex JSON keys](https://wiki.apache.org/couchdb/Introduction_to_CouchDB_views#Complex_Keys) (which are a pain to do with `curl`)
 
+[![NPM](https://nodei.co/npm/couch-view-by-keys.png?stars&downloads&downloadRank)](https://npmjs.com/package/couch-view-by-keys/)
+[![License](https://img.shields.io/badge/license-MIT-blue.svg)](https://opensource.org/licenses/MIT)
+[![Node](https://img.shields.io/badge/node-%3E=%20v7.6.0-brightgreen.svg)](http://nodejs.org)
+
 ## Summary
 
 <!-- START doctoc generated TOC please keep comment here to allow auto update -->
