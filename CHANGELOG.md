@@ -2,6 +2,7 @@
 *versions follow [SemVer](http://semver.org)*
 
 ## 4.0.0 - 2020-05-11
+* renamed module 'couch-view-by-keys'
 * BREAKING CHANGE: repurposed the `-d` option to be short for `--docs` (instead of `--debug`)
 * Add `-d, --docs` and `-v, --values` option
 * Set `'reduce=false` by default
