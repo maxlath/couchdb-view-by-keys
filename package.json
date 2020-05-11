@@ -1,10 +1,10 @@
 {
-  "name": "couch-view-by-keys",
+  "name": "couchdb-view-by-keys",
   "version": "4.0.1",
   "description": "A command line tool to query CouchDB views, focused on easing queries with complex JSON keys",
-  "main": "./bin/couch-view-by-keys",
+  "main": "./bin/couchdb-view-by-keys",
   "bin": {
-    "couch-view-by-keys": "bin/couch-view-by-keys"
+    "couchdb-view-by-keys": "bin/couchdb-view-by-keys"
   },
   "files": [
     "bin",
@@ -41,10 +41,10 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/maxlath/couch-view-by-keys.git"
+    "url": "git+https://github.com/maxlath/couchdb-view-by-keys.git"
   },
   "bugs": {
-    "url": "https://github.com/maxlath/couch-view-by-keys/issues"
+    "url": "https://github.com/maxlath/couchdb-view-by-keys/issues"
   },
-  "homepage": "https://github.com/maxlath/couch-view-by-keys#readme"
+  "homepage": "https://github.com/maxlath/couchdb-view-by-keys#readme"
 }
