@@ -19,6 +19,8 @@ A command line tool to query [CouchDB](http://couchdb.apache.org/) [views](https
   - [Get docs](#get-docs)
   - [Get values](#get-values)
   - [Get only view rows id and key](#get-only-view-rows-id-and-key)
+  - [Limit](#limit)
+  - [Skip](#skip)
   - [Output format](#output-format)
     - [newline-delimited JSON](#newline-delimited-json)
     - [JSON](#json)
@@ -67,6 +69,16 @@ couch-view-by-keys "${url}?include_docs=false"
 ```
 
 NB: `reduce=false` is also set by default, as `reduce=true` is incompatible with `include_docs=true`
+
+### Limit
+```sh
+couch-view-by-keys "${url}?limit=10"
+```
+
+### Skip
+```sh
+couch-view-by-keys "${url}?skip=10"
+```
 
 ### Output format
 #### newline-delimited JSON
