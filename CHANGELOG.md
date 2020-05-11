@@ -1,8 +1,10 @@
 # CHANGELOG
 *versions follow [SemVer](http://semver.org)*
 
-## 3.1.0 - 2020-05-11
-* Add `--only-doc` option
+## 4.0.0 - 2020-05-11
+* BREAKING CHANGE: repurposed the `-d` option to be short for `--docs` (instead of `--debug`)
+* Add `-d, --docs` and `-v, --values` option
+* Set `'reduce=false` by default
 
 ## 3.0.0 - 2020-01-17
 * BREAKING CHANGE: made the output consistent: all request return row data, instead of having some request return docs only
