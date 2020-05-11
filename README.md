@@ -27,7 +27,7 @@ npm install -g couch-view-by-keys
 
 ## How-To
 
-### Basic use
+### General
 ```sh
 url="http://username:password@localhost:5984/db-name/_design/design-doc-name/_view/view-name"
 couch-view-by-keys "$url" keyA keyB keyC
@@ -43,8 +43,25 @@ couch-view-by-keys "$url" docIdA docIdB docIdC
 cat ids | xargs couch-view-by-keys "$url"
 ```
 
+### Get rows
+couch-view-by-keys "$url"
+
+### Get docs
+couch-view-by-keys --docs "$url"
+
+### Get values
+couch-view-by-keys --values "$url"
+
+### Get only view rows id and key
+By default, view rows are returned with their document, but this can be disabled by setting `include_docs=false`
+```sh
+couch-view-by-keys "${url}?include_docs=false"
+```
+
+NB: `reduce=false` is also set by default, as `reduce=true` is incompatible with `include_docs=true`
+
 ### Output format
-#### one row per line
+#### newline-delimited JSON
 That's the default output format
 ```sh
 couch-view-by-keys "$url" keyA keyB keyC
@@ -54,9 +71,13 @@ set the indentation to 0 to drop newlines
 couch-view-by-keys "$url" keyA keyB keyC --json 0
 ```
 
-#### indented JSON
+#### JSON
 ```sh
+# Get all the rows as an array of object
+couch-view-by-keys "$url" keyA keyB keyC --json
+# Same, but with an indentation of 2
 couch-view-by-keys "$url" keyA keyB keyC --json 2
+# Same, but with an indentation of 4
 couch-view-by-keys "$url" keyA keyB keyC --json 4
 ```
 
@@ -74,19 +95,3 @@ couch-view-by-keys "$url" "['$1','a']" "['$2','b']" "['$3','c']"
 couch-view-by-keys "$url" "{ 'a': '$1'}"
 # TODO: make it work for nested objects/arrays if you have the need
 ```
-
-### Get only docs
-By default, view rows are returned, that is, and object looking like `{ id, key, value, doc }`. This can easily be parsed with [jq](https://stedolan.github.io/jq/manual/) to keep only the docs:
-```sh
-couch-view-by-keys $url | jq '.doc' -c
-```
-
-Notice the `-c` option (short for `--compact-output`) to keep the output in a NDJSON format.
-
-### Get only view rows id and key
-By default, view rows are returned with their document, but this can be disabled by setting `include_docs=false`
-```sh
-couch-view-by-keys "${url}?include_docs=false"
-```
-
-NB: `reduce=false` is also set by default as `reduce=true` is incompatible with `include_docs=true`

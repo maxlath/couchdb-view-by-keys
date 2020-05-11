@@ -3,15 +3,19 @@ const program = require('commander')
 const URL = require('url')
 
 program
-.option('-d, --debug', 'Debug')
+.option('-d, --docs', 'parse the row to return only the doc')
+.option('-v, --values', 'parse the row to return only the row value')
 .option('-n, --ndjson', 'Log as NDJSON')
 .option('-j, --json [indentation]', 'JSON indentation')
 .option('-k, --keep <attributes>', 'Pick attributes to keep')
+.option('--debug', 'log CouchDB requests parameters')
 .parse(process.argv)
 
 if (program.args.length === 0) return program.help()
 
-const { debug, ndjson, json, keep } = program
+const { doc: onlyDoc, value: onlyValue, ndjson, json, keep, debug } = program
+if (onlyDoc && onlyValue) throw new Error("can't have both --doc and --value flags")
+
 const indentation = /^\d+$/.test(json) ? parseInt(json) : 0
 
 var [ url, ...keys ] = program.args
@@ -54,11 +58,16 @@ const logger = json ? require('../lib/json')(indentation) : require('../lib/ndjs
 
 const keeper = require('../lib/keep')(keep)
 
+if (onlyDoc) query.include_docs = true
+else if (onlyValue) query.include_docs = false
+
 query = require('../lib/parse_query_and_apply_defaults')(query)
 
 const getRows = require('../lib/get_rows')
+const getDoc = row => row.doc
 
 getRows({ db, designDocName, viewName, query, allDocsMode, keys })
+.then(rows => onlyDoc ? rows.map(getDoc) : rows)
 .then(keeper)
 .then(logger)
 .catch(console.error)
