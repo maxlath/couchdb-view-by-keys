@@ -1,6 +1,6 @@
 {
   "name": "couch-view-by-keys",
-  "version": "3.0.0",
+  "version": "4.0.0",
   "description": "A command line tool to query CouchDB views, focused on easing queries with complex JSON keys",
   "main": "./bin/couch-view-by-keys",
   "bin": {
