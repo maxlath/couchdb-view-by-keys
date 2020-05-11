@@ -10,10 +10,14 @@ A command line tool to query [CouchDB](http://couchdb.apache.org/) [views](https
 
 - [Install](#install)
 - [How-To](#how-to)
-  - [Basic use](#basic-use)
+  - [General](#general)
+  - [Get rows](#get-rows)
+  - [Get docs](#get-docs)
+  - [Get values](#get-values)
+  - [Get only view rows id and key](#get-only-view-rows-id-and-key)
   - [Output format](#output-format)
-    - [one row per line](#one-row-per-line)
-    - [indented JSON](#indented-json)
+    - [newline-delimited JSON](#newline-delimited-json)
+    - [JSON](#json)
 - [Tips](#tips)
   - [use single quotes in JSON keys](#use-single-quotes-in-json-keys)
 
