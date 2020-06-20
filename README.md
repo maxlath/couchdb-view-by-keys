@@ -17,6 +17,7 @@ A command line tool to query [CouchDB](http://couchdb.apache.org/) [views](https
   - [General](#general)
   - [Get rows](#get-rows)
   - [Get docs](#get-docs)
+  - [Get keys](#get-keys)
   - [Get values](#get-values)
   - [Get only view rows id and key](#get-only-view-rows-id-and-key)
   - [Limit](#limit)
@@ -59,6 +60,9 @@ couchdb-view-by-keys "$url"
 ### Get docs
 couchdb-view-by-keys --docs "$url"
 
+### Get keys
+couchdb-view-by-keys --keys "$url"
+
 ### Get values
 couchdb-view-by-keys --values "$url"
 
@@ -82,7 +86,7 @@ couchdb-view-by-keys "${url}?skip=10"
 
 ### Output format
 #### newline-delimited JSON
-That's the default output format
+Newline-delimited JSON (a.k.a NDJSON) is the the default output format
 ```sh
 couchdb-view-by-keys "$url" keyA keyB keyC
 ```
