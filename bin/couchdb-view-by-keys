@@ -23,7 +23,8 @@ const indentation = /^\d+$/.test(json) ? parseInt(json) : 0
 
 var [ url, ...keys ] = program.args
 
-var { protocol, auth, hostname, port, query, pathname } = URL.parse(url, true)
+var { protocol, auth, hostname, port, query } = URL.parse(url, true)
+if (!(protocol && hostname)) throw new Error(`invalid URL: ${url}`)
 protocol = protocol.replace(':', '')
 
 var username, password
