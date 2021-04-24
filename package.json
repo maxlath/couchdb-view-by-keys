@@ -12,6 +12,8 @@
   ],
   "scripts": {
     "test": "mocha",
+    "prepublishOnly": "npm test",
+    "postpublish": "git push --tags",
     "update-toc": "./scripts/update_toc"
   },
   "keywords": [
