@@ -1,8 +1,12 @@
 #!/usr/bin/env node
 const program = require('commander')
 const URL = require('url')
+const { version, description } = require('../package.json')
 
 program
+.version(version)
+.description(description)
+.arguments('<authentified-database-url> [keys...]')
 .option('-d, --docs', 'parse the row to return only the doc')
 .option('--keys', 'parse the row to return only the row key')
 .option('-v, --values', 'parse the row to return only the row value')
